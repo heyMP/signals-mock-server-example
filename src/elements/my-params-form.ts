@@ -23,14 +23,25 @@ export class MyParamsForm extends LitElement {
 
   render() {
     return html`
-      <form @change=${this.formChanged} @reset=${this.formReset}>
-        <label for="mocks">Enable Mocks</label>
-        <input id="mocks" type="checkbox" name="mocks" .checked=${this.formData.value.has('mocks')}>
-        <label for="delay">Delay</label>
-        <input id="delay" type="checkbox" name="delay" .checked=${this.formData.value.has('delay')}>
-        <label for="random-error">Random Error</label>
-        <input id="random-error" type="checkbox" name="random-error" .checked=${this.formData.value.has('random-error')}>
-      </form>
+      <details open>
+        <summary>Mocks</summary>
+        <fieldset>
+          <form @change=${this.formChanged} @reset=${this.formReset}>
+            <div>
+              <label for="mocks">Enable Mocks</label>
+              <input id="mocks" type="checkbox" name="mocks" .checked=${this.formData.value.has('mocks')}>
+            </div>
+            <div>
+              <label for="delay">Delay</label>
+              <input id="delay" type="checkbox" name="delay" .checked=${this.formData.value.has('delay')}>
+            </div>
+            <div>
+              <label for="random-error">Random Error</label>
+              <input id="random-error" type="checkbox" name="random-error" .checked=${this.formData.value.has('random-error')}>
+            </div>
+          </form>
+        </fieldset>
+      </details>
     `
   }
 
