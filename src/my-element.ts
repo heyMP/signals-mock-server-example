@@ -2,10 +2,11 @@ import { LitElement, html } from 'lit'
 import { customElement } from 'lit/decorators.js'
 import { repeat } from 'lit/directives/repeat.js';
 import { watchSignal } from '@heymp/signals/lit';
-import { match, when, P } from 'ts-pattern';
+import { match, P } from 'ts-pattern';
 import { UsersSignal } from './services/users.js';
 import { UserSignal } from './services/user.js';
 import { initMocks } from './mocks/init.js';
+import './elements/my-params-form.js';
 import './elements/my-user.js';
 
 await initMocks();
@@ -39,6 +40,7 @@ export class MyElement extends LitElement {
       .exhaustive()
 
     return html`
+      <my-params-form></my-params-form>
       <div>Service State: ${this.users.state}</div>
       <div>Service Children State: ${this.renderUsersServiceStatus()}</div>
       <button @click=${this.refresh}>refresh</button>
