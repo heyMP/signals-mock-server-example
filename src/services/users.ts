@@ -50,6 +50,7 @@ export class UsersSignal extends State<UserSignal[] | undefined> {
 
   async update() {
     this.state = 'updating';
+    this.value = [];
     const { data, error } = await fetchWrapper<User[]>({ url: 'https://example.com/users' });
 
     if (error) {

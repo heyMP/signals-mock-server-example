@@ -41,8 +41,8 @@ export class MyElement extends LitElement {
 
     return html`
       <my-params-form></my-params-form>
-      <div>Service State: ${this.users.state}</div>
-      <div>Service Children State: ${this.renderUsersServiceStatus()}</div>
+      <div>Service State: ${this.renderState()}</div>
+      <div>Service Children State: ${this.renderChildStatus()}</div>
       <button @click=${this.refresh}>refresh</button>
       ${content}
     `;
@@ -74,8 +74,16 @@ export class MyElement extends LitElement {
     return html`<li><my-user .user=${user}></my-user></li>`
   }
 
-  renderUsersServiceStatus() {
+  renderState() {
+    return match(this.users.state)
+      .with('error', () => html`🚨`)
+      .with('complete', () => html`✅`)
+      .otherwise(() => html`✨`)
+  }
+
+  renderChildStatus() {
     return match(this.users.childStates.value)
+      .with(P.when(set => set.size === 0), () => html`🔌`)
       .with(P.when(set => set.has('error')), () => html`🚨`)
       .with(P.when(set => 
         (set.size === 1 || set.size === 2) &&
