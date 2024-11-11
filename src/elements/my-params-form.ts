@@ -85,7 +85,7 @@ export class MyParamsForm extends LitElement {
         }
       }
       else {
-        params.set(key, '');
+        params.set(key, value.toString());
       }
     }
     window.location.search = params.toString();
