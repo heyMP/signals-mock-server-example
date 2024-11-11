@@ -1,15 +1,13 @@
 import { User } from '../../types.js';
 import { faker } from '@faker-js/faker';
 
-let users: User[] = [];
+export function getUsers(amount: number) {
+  return Array(amount).fill(null).map(() => {
+    const id = faker.string.uuid();
+    const firstName = faker.person.firstName();
+    const lastName = faker.person.lastName();
+    const isActive = faker.datatype.boolean();
 
-for (const _ of Array(10)) {
-  const id = faker.string.uuid();
-  const firstName = faker.person.firstName();
-  const lastName = faker.person.lastName();
-  const isActive = faker.datatype.boolean();
-
-  users.push({ id, firstName, lastName, isActive });
+    return { id, firstName, lastName, isActive };
+  }) satisfies User[];
 }
-
-export { users };

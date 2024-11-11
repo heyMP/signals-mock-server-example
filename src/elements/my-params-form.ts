@@ -23,25 +23,37 @@ export class MyParamsForm extends LitElement {
 
   render() {
     return html`
-      <details open>
-        <summary>Mocks</summary>
-        <fieldset>
-          <form @change=${this.formChanged} @reset=${this.formReset}>
-            <div>
-              <label for="mocks">Enable Mocks</label>
-              <input id="mocks" type="checkbox" name="mocks" .checked=${this.formData.value.has('mocks')}>
-            </div>
-            <div>
-              <label for="delay">Delay</label>
-              <input id="delay" type="checkbox" name="delay" .checked=${this.formData.value.has('delay')}>
-            </div>
-            <div>
-              <label for="random-error">Random Error</label>
-              <input id="random-error" type="checkbox" name="random-error" .checked=${this.formData.value.has('random-error')}>
-            </div>
-          </form>
-        </fieldset>
-      </details>
+      <fieldset>
+        <details open>
+          <summary>Mocks</summary>
+          <fieldset>
+            <form @change=${this.formChanged} @reset=${this.formReset}>
+              <div>
+                <label for="mocks">Enable Mocks</label>
+                <input id="mocks" type="checkbox" name="mocks" .checked=${this.formData.value.has('mocks')}>
+              </div>
+              <div>
+                <label for="delay">Delay</label>
+                <input id="delay" type="checkbox" name="delay" .checked=${this.formData.value.has('delay')}>
+              </div>
+              <div>
+                <label for="random-error">Random Error</label>
+                <input id="random-error" type="checkbox" name="random-error" .checked=${this.formData.value.has('random-error')}>
+              </div>
+              <div>
+                <label for="users">Custom Users Amount</label>
+                <input id="users" type="checkbox" name="users" .checked=${this.formData.value.has('users')}>
+              </div>
+              <fieldset ?hidden=${!this.formData.value.has('users')}>
+                <div>
+                  <label for="users-count">Users Count</label>
+                  <input id="users-count" type="number" name="users-count" .value=${this.formData.value.get('users-count')} placeholder="10">
+                </div>
+              </fieldset>
+            </form>
+          </fieldset>
+        </details>
+      </fieldset>
     `
   }
 
@@ -66,8 +78,15 @@ export class MyParamsForm extends LitElement {
 
   syncToURL() {
     const params = new URLSearchParams();
-    for (const [key] of Array.from(this.formData.value)) {
-      params.set(key, '');
+    for (const [key, value] of Array.from(this.formData.value)) {
+      if (key === 'users-count') {
+        if (this.formData.value.has('users')) {
+          params.set(key, value.toString())
+        }
+      }
+      else {
+        params.set(key, '');
+      }
     }
     window.location.search = params.toString();
   }
