@@ -55,7 +55,7 @@ export class MyParamsForm extends LitElement {
 
   syncToURL() {
     const params = new URLSearchParams();
-    for (const [key, value] of Array.from(this.formData.value)) {
+    for (const [key] of Array.from(this.formData.value)) {
       params.set(key, '');
     }
     window.location.search = params.toString();

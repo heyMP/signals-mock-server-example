@@ -1,7 +1,7 @@
 import { State, SignalUpdatedEvent, Computed } from '@heymp/signals';
 import { User } from '../types.js';
 import { fetchWrapper } from '../lib/fetchWrapper.js';
-import { UserSignal, UserSignalState } from './user.js';
+import { UserSignal } from './user.js';
 
 export type UsersSignalState = 'initial' | 'updating' | 'complete' | 'error';
 
