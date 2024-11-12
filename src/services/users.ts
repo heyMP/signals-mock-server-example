@@ -3,7 +3,9 @@ import { User } from '../types.js';
 import { fetchWrapper } from '../lib/fetchWrapper.js';
 import { UserSignal } from './user.js';
 
-export type UsersSignalState = 'initial' | 'updating' | 'complete' | 'error';
+export const usersSignalStates = ['initial', 'updating', 'complete', 'error'] as const;
+
+export type UsersSignalState = typeof usersSignalStates[number];
 
 export class UsersSignal extends State<UserSignal[] | undefined> {
   constructor(value?: UserSignal[]) {

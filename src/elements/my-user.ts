@@ -16,6 +16,10 @@ export class MyUser extends LitElement {
   @watchSignal
   user?: UserSignal;
 
+  protected createRenderRoot(): HTMLElement | DocumentFragment {
+    return this;
+  }
+
   render() {
     const name = `${this.user?.value?.firstName} ${this.user?.value?.lastName}`;
     const ariaLabel = this.user?.value.isActive ? 'Activate user' : 'Deactivate user';

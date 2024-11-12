@@ -21,39 +21,39 @@ export class MyParamsForm extends LitElement {
     this.init();
   }
 
+  protected createRenderRoot(): HTMLElement | DocumentFragment {
+    return this;
+  }
+
   render() {
     return html`
-      <fieldset>
-        <details open>
-          <summary>Mocks</summary>
-          <fieldset>
-            <form @change=${this.formChanged} @reset=${this.formReset}>
-              <div>
-                <label for="mocks">Enable Mocks</label>
-                <input id="mocks" type="checkbox" name="mocks" .checked=${this.formData.value.has('mocks')}>
-              </div>
-              <div>
-                <label for="delay">Delay</label>
-                <input id="delay" type="checkbox" name="delay" .checked=${this.formData.value.has('delay')}>
-              </div>
-              <div>
-                <label for="random-error">Random Error</label>
-                <input id="random-error" type="checkbox" name="random-error" .checked=${this.formData.value.has('random-error')}>
-              </div>
-              <div>
-                <label for="users">Custom Users Amount</label>
-                <input id="users" type="checkbox" name="users" .checked=${this.formData.value.has('users')}>
-              </div>
-              <fieldset ?hidden=${!this.formData.value.has('users')}>
-                <div>
-                  <label for="users-count">Users Count</label>
-                  <input id="users-count" type="number" name="users-count" .value=${this.formData.value.get('users-count')} placeholder="10">
-                </div>
-              </fieldset>
-            </form>
+      <details open>
+        <summary>Mocks</summary>
+        <form @change=${this.formChanged} @reset=${this.formReset}>
+          <div>
+            <label for="mocks">Enable Mocks</label>
+            <input id="mocks" type="checkbox" name="mocks" .checked=${this.formData.value.has('mocks')}>
+          </div>
+          <div>
+            <label for="delay">Delay</label>
+            <input id="delay" type="checkbox" name="delay" .checked=${this.formData.value.has('delay')}>
+          </div>
+          <div>
+            <label for="random-error">Random Error</label>
+            <input id="random-error" type="checkbox" name="random-error" .checked=${this.formData.value.has('random-error')}>
+          </div>
+          <div>
+            <label for="users">Custom Users Amount</label>
+            <input id="users" type="checkbox" name="users" .checked=${this.formData.value.has('users')}>
+          </div>
+          <fieldset ?hidden=${!this.formData.value.has('users')}>
+            <div>
+              <label for="users-count">Users Count</label>
+              <input id="users-count" type="number" name="users-count" .value=${this.formData.value.get('users-count')} placeholder="10">
+            </div>
           </fieldset>
-        </details>
-      </fieldset>
+        </form>
+      </details>
     `
   }
 
@@ -70,9 +70,11 @@ export class MyParamsForm extends LitElement {
 
   formChanged() {
     if (!this.formData) return;
-    const form = this.shadowRoot?.querySelector('form');
+    const form = this.renderRoot?.querySelector('form');
+    console.log(form);
     if (!form) return;
     this.formData.value = new FormData(form);
+    console.log([...this.formData.value])
     this.syncToURL();
   }
 

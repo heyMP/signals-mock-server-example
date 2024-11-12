@@ -2,7 +2,9 @@ import { State, SignalUpdatedEvent } from '@heymp/signals';
 import { User } from '../types.js';
 import { fetchWrapper } from '../lib/fetchWrapper.js';
 
-export type UserSignalState = 'initial' | 'updating' | 'activating' | 'deactivating' | 'complete' | 'error';
+export const userSignalStates = ['initial', 'updating', 'activating', 'deactivating', 'complete', 'error'] as const;
+
+export type UserSignalState = typeof userSignalStates[number];
 
 export class UserSignal extends State<User> {
   constructor(value: User) {
